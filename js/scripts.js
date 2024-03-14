@@ -1,11 +1,12 @@
 fetch('https://fakestoreapi.com/products')
     .then(res => res.json())
     .then(products => {
-        let row = document.querySelector('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center'); // Ange rätt selektor för din rad
+        let row = document.querySelector('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center');
 
         products.forEach(product => {
             // Skapa nya element
             let col = document.createElement('div');
+            let link = document.createElement('a');
             let card = document.createElement('div');
             let img = document.createElement('img');
             let body = document.createElement('div');
@@ -14,10 +15,11 @@ fetch('https://fakestoreapi.com/products')
             let price = document.createElement('p');
             let footer = document.createElement('div');
             let footerCenter = document.createElement('div');
-            let button = document.createElement('a');
+            let button = document.createElement('div');
 
             // Ange attribut och innehåll
-            col.className = 'col-12 col-sm-6 col-lg-4 mb-5'; // En produkt per rad på små skärmar, två på mellanstora, och tre på stora
+            col.className = 'col-12 col-sm-6 col-lg-4 mb-5';
+            link.href = `products.html`; // Ändra här för att skapa en unik länk för varje produkt
             card.className = 'card h-100';
             img.className = 'card-img-top';
             img.src = product.image;
@@ -33,7 +35,6 @@ fetch('https://fakestoreapi.com/products')
             footer.className = 'card-footer p-4 pt-0 border-top-0 bg-transparent';
             footerCenter.className = 'text-center';
             button.className = 'btn btn-outline-dark mt-auto';
-            button.href = '#';
             button.textContent = 'Add to cart';
 
             // Bygg upp HTML-strukturen
@@ -45,7 +46,8 @@ fetch('https://fakestoreapi.com/products')
             card.appendChild(img);
             card.appendChild(body);
             card.appendChild(footer);
-            col.appendChild(card);
+            link.appendChild(card);
+            col.appendChild(link);
 
             // Lägg till det nya elementet i raden
             row.appendChild(col);
