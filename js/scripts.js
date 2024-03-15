@@ -1,6 +1,13 @@
-fetch('https://fakestoreapi.com/products')
-    .then(res => res.json())
-    .then(products => {
+function fetchProducts(handleProducts) {
+    fetch('https://fakestoreapi.com/products')
+        .then(res => res.json())
+        .then(products => {
+            handleProducts(products);
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+fetchProducts(products => {
         let row = document.querySelector('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center');
 
         products.forEach(product => {
@@ -19,7 +26,7 @@ fetch('https://fakestoreapi.com/products')
 
             // Ange attribut och innehåll
             col.className = 'col-12 col-sm-6 col-lg-4 mb-5';
-            link.href = `products.html` + '?' + 'id' + '=' + product.id // Ändra här för att skapa en unik länk för varje produkt
+            link.href = 'products.html?id='+ product.id// Ändra här för att skapa en unik länk för varje produkt
             //link.href = `products.html` + '?' + encodeURIComponent(product.title); // Ändra här för att skapa en unik länk för varje produkt
             card.className = 'card h-100';
             img.className = 'card-img-top';
@@ -54,7 +61,9 @@ fetch('https://fakestoreapi.com/products')
             row.appendChild(col);
         });
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error:', error))
+
+// Hämta produkt-ID:t från URL:en
 
 function getUrlVars() {
     let vars = [], hash;
