@@ -19,7 +19,7 @@ fetch('https://fakestoreapi.com/products')
 
             // Ange attribut och innehåll
             col.className = 'col-12 col-sm-6 col-lg-4 mb-5';
-            link.href = `products.html` + '?' + 'title' + '=' + product.title; // Ändra här för att skapa en unik länk för varje produkt
+            link.href = `products.html` + '?' + 'id' + '=' + product.id // Ändra här för att skapa en unik länk för varje produkt
             //link.href = `products.html` + '?' + encodeURIComponent(product.title); // Ändra här för att skapa en unik länk för varje produkt
             card.className = 'card h-100';
             img.className = 'card-img-top';
