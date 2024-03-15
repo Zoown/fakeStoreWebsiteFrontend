@@ -19,7 +19,8 @@ fetch('https://fakestoreapi.com/products')
 
             // Ange attribut och innehåll
             col.className = 'col-12 col-sm-6 col-lg-4 mb-5';
-            link.href = `products.html`; // Ändra här för att skapa en unik länk för varje produkt
+            link.href = `products.html` + '?' + 'title' + '=' + product.title; // Ändra här för att skapa en unik länk för varje produkt
+            //link.href = `products.html` + '?' + encodeURIComponent(product.title); // Ändra här för att skapa en unik länk för varje produkt
             card.className = 'card h-100';
             img.className = 'card-img-top';
             img.src = product.image;
@@ -54,3 +55,16 @@ fetch('https://fakestoreapi.com/products')
         });
     })
     .catch(error => console.error('Error:', error));
+
+function getUrlVars() {
+    let vars = [], hash;
+    let hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(let i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        //hash[1].trim().replace("%20",a/g);
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
