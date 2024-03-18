@@ -23,7 +23,7 @@ fetchProducts(products => {
             let footer = document.createElement('div');
             let footerCenter = document.createElement('div');
             let button = document.createElement('a');
-
+                
             // Ange attribut och innehåll
             col.className = 'col-12 col-sm-6 col-lg-4 mb-5';
             link.href = 'products.html?id='+ product.id;
