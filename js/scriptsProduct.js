@@ -1,10 +1,9 @@
-let urlParams = new URLSearchParams(window.location.search);
-let productId = urlParams.get('id');
 
-fetch('https://fakestoreapi.com/products/' + productId)
-    .then(res => res.json())
-    .then(product => {
-        // Hitta rätt plats i dokumentet där du vill lägga till produktinformation
+ window.onload = function() {
+        // Hämta den valda produkten från localStorage
+        let product = JSON.parse(localStorage.getItem('sendToProducts'));
+
+        // Selektor i products.html
         let productContainer = document.querySelector('.row.gx-4.gx-lg-5.align-items-center');
 
         // Skapa nya element
@@ -39,7 +38,7 @@ fetch('https://fakestoreapi.com/products/' + productId)
         input.id = 'inputQuantity';
         input.type = 'num';
         input.value = '1';
-        input.style.maxWidth = '3rem';
+        input.style.maxWidth = '3rem'; //inline css
         button.className = 'btn btn-outline-dark flex-shrink-0';
         button.type = 'button';
         button.innerHTML = '<i class="bi-cart-fill me-1"></i>Add to cart';
@@ -69,5 +68,67 @@ fetch('https://fakestoreapi.com/products/' + productId)
         colInfo.appendChild(inputGroup);
         productContainer.appendChild(colImg);
         productContainer.appendChild(colInfo);
-    })
-    .catch(error => console.error('Error:', error));
+
+         // Hämta den valda produkten från localStorage
+         //let product = JSON.parse(localStorage.getItem('sendToProducts'));
+         let productsfromCategory = JSON.parse(localStorage.getItem('productsByCategory'));
+     
+         // Selektor i products.html
+     
+         // Skapa upp den valda produkten
+         createProductElement(product, productContainer);
+     
+         // Skapa upp varje relaterad produkt
+         productsfromCategory.forEach(relatedProduct => {
+             createProductElement(relatedProduct, productContainer);
+         });
+    };
+
+   // window.onload = function() {
+       
+    //};
+    
+    function createProductElement(product, container) {
+        // Skapa nya element
+        let col = document.createElement('div');
+        let card = document.createElement('div');
+        let img = document.createElement('img');
+        let body = document.createElement('div');
+        let center = document.createElement('div');
+        let title = document.createElement('h5');
+        let price = document.createElement('p');
+        let footer = document.createElement('div');
+        let footerCenter = document.createElement('div');
+        let button = document.createElement('button');
+    
+        // Ange attribut och innehåll
+        col.className = 'col mb-5';
+        card.className = 'card h-100';
+        img.className = 'card-img-top';
+        img.src = product.img;
+        img.alt = product.title;
+        body.className = 'card-body p-4';
+        center.className = 'text-center';
+        title.className = 'fw-bolder';
+        title.textContent = product.title;
+        price.textContent = `$${product.price}`;
+        footer.className = 'card-footer p-4 pt-0 border-top-0 bg-transparent';
+        footerCenter.className = 'text-center';
+        button.className = 'btn btn-outline-dark mt-auto';
+        button.textContent = 'View options';
+    
+        // Bygg upp HTML-strukturen
+        center.appendChild(title);
+        center.appendChild(price);
+        body.appendChild(center);
+        footerCenter.appendChild(button);
+        footer.appendChild(footerCenter);
+        card.appendChild(img);
+        card.appendChild(body);
+        card.appendChild(footer);
+        col.appendChild(card);
+    
+        // Lägg till det nya elementet i produktcontainern
+        container.appendChild(col);
+    }
+    

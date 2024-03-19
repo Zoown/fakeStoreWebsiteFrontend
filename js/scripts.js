@@ -26,7 +26,6 @@ fetchProducts(products => {
                 
             // Ange attribut och innehåll
             col.className = 'col-12 col-sm-6 col-lg-4 mb-5';
-            link.href = 'products.html?id='+ product.id;
             link.style.textDecoration = 'none'; //inline css
 
             link.addEventListener('click', function(event) {
@@ -35,17 +34,49 @@ fetchProducts(products => {
                     event.preventDefault();
                 } else {
                 // Annars, följ länken till produktsidan
-                window.location.href = 'products.html?id=' + product.id;
+                let sendToProducts = {
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    img: product.image,
+                    category: product.category,
+                    description: product.description,
+                };
+                localStorage.setItem('sendToProducts', JSON.stringify(product));
+                window.open('products.html', '_self');
+
+                // Skapa ett tomt objekt för att lagra produkterna per kategori
+                let productsByCategory = {};
+
+                // Gå igenom varje produkt
+                products.forEach(product => {
+                // Om kategorin inte redan finns i objektet, skapa en ny lista för den
+                if (!productsByCategory[product.category]) {
+                    productsByCategory[product.category] = [];
                 }
+
+                // Lägg till produkten i listan för dess kategori
+                productsByCategory[product.category].push({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    img: product.image,
+                    description: product.description,
+                });
             });
+
+            // Lagra objektet i localStorage
+            localStorage.setItem('productsByCategory', JSON.stringify(productsByCategory));
+                
+            }});
 
             card.className = 'card h-100';
             img.className = 'card-img-top';
             img.src = product.image;
             img.alt = product.title;
-            img.style.height = '300px'; // inline inte bäst practice
+            img.style.height = '300px'; // inline css inte bäst practice
             img.style.width = '100%'; // inline css
-            img.style.objectFit = 'cover';
+            img.style.objectFit = 'cover'; // inline css
             body.className = 'card-body p-4';
             center.className = 'text-center';
             center.style.color = 'black'; //inline css
