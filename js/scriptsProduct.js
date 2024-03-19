@@ -44,6 +44,20 @@ fetch('https://fakestoreapi.com/products/' + productId)
         button.type = 'button';
         button.innerHTML = '<i class="bi-cart-fill me-1"></i>Add to cart';
 
+        button.addEventListener('click', function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+    
+            let selectedProduct = {
+                id: product.id,
+                title: product.title,
+                price: product.price,
+            };
+        
+            localStorage.setItem('selectedProduct', JSON.stringify(product));
+            window.open('cart.html', '_self');
+        });
+
         // Bygg upp HTML-strukturen
         colImg.appendChild(img);
         inputGroup.appendChild(input);

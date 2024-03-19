@@ -22,23 +22,34 @@ fetchProducts(products => {
             let price = document.createElement('p');
             let footer = document.createElement('div');
             let footerCenter = document.createElement('div');
-            let button = document.createElement('a');
+            let button = document.createElement('button');
                 
             // Ange attribut och innehåll
             col.className = 'col-12 col-sm-6 col-lg-4 mb-5';
             link.href = 'products.html?id='+ product.id;
-            link.style.textDecoration = 'none';
+            link.style.textDecoration = 'none'; //inline css
+
+            link.addEventListener('click', function(event) {
+                // Om användaren klickade på knappen, gör ingenting
+                if (event.target === button) {
+                    event.preventDefault();
+                } else {
+                // Annars, följ länken till produktsidan
+                window.location.href = 'products.html?id=' + product.id;
+                }
+            });
+
             card.className = 'card h-100';
             img.className = 'card-img-top';
             img.src = product.image;
             img.alt = product.title;
-            img.style.height = '300px';
-            img.style.width = '100%';
+            img.style.height = '300px'; // inline inte bäst practice
+            img.style.width = '100%'; // inline css
             img.style.objectFit = 'cover';
             body.className = 'card-body p-4';
             center.className = 'text-center';
-            center.style.color = 'black';
-            center.style.textDecoration = 'none';
+            center.style.color = 'black'; //inline css
+            center.style.textDecoration = 'none'; //inline css
             title.className = 'fw-bolder';
             title.textContent = product.title;
             price.textContent = `$${product.price}`;
@@ -46,7 +57,20 @@ fetchProducts(products => {
             footerCenter.className = 'text-center ';
             button.className = 'btn btn-outline-dark mt-auto';
             button.textContent = 'Add to cart';
-            button.href = 'cart.html?id=' + product.id;
+            
+            button.addEventListener('click', function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+        
+                let selectedProduct = {
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                };
+            
+                localStorage.setItem('selectedProduct', JSON.stringify(product));
+                window.open('cart.html', '_self');
+            });
 
             // Bygg upp HTML-strukturen
             center.appendChild(title);
