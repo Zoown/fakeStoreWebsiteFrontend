@@ -69,66 +69,87 @@
         productContainer.appendChild(colImg);
         productContainer.appendChild(colInfo);
 
-         // Hämta den valda produkten från localStorage
-         //let product = JSON.parse(localStorage.getItem('sendToProducts'));
-         let productsfromCategory = JSON.parse(localStorage.getItem('productsByCategory'));
-     
-         // Selektor i products.html
-     
-         // Skapa upp den valda produkten
-         createProductElement(product, productContainer);
-     
-         // Skapa upp varje relaterad produkt
-         productsfromCategory.forEach(relatedProduct => {
-             createProductElement(relatedProduct, productContainer);
-         });
-    };
+        function createRelatedProductElement(product, container) {
+            // Skapa nya element
+            let col = document.createElement('div');
+            let card = document.createElement('div');
+            let img = document.createElement('img');
+            let cardBody = document.createElement('div');
+            let textCenter = document.createElement('div');
+            let title = document.createElement('h5');
+            let reviews = document.createElement('div');
+            let price = document.createElement('span');
+            let cardFooter = document.createElement('div');
+            let buttonDiv = document.createElement('div');
+            let button = document.createElement('a');
+        
+            // Ange attribut och innehåll
+            col.className = 'col mb-5';
+            card.className = 'card h-100';
+            img.className = 'card-img-top';
+            img.src = product.image;
+            img.alt = product.title;
 
-   // window.onload = function() {
-       
-    //};
-    
-    function createProductElement(product, container) {
-        // Skapa nya element
-        let col = document.createElement('div');
-        let card = document.createElement('div');
-        let img = document.createElement('img');
-        let body = document.createElement('div');
-        let center = document.createElement('div');
-        let title = document.createElement('h5');
-        let price = document.createElement('p');
-        let footer = document.createElement('div');
-        let footerCenter = document.createElement('div');
-        let button = document.createElement('button');
-    
-        // Ange attribut och innehåll
-        col.className = 'col mb-5';
-        card.className = 'card h-100';
-        img.className = 'card-img-top';
-        img.src = product.img;
-        img.alt = product.title;
-        body.className = 'card-body p-4';
-        center.className = 'text-center';
-        title.className = 'fw-bolder';
-        title.textContent = product.title;
-        price.textContent = `$${product.price}`;
-        footer.className = 'card-footer p-4 pt-0 border-top-0 bg-transparent';
-        footerCenter.className = 'text-center';
-        button.className = 'btn btn-outline-dark mt-auto';
-        button.textContent = 'View options';
-    
-        // Bygg upp HTML-strukturen
-        center.appendChild(title);
-        center.appendChild(price);
-        body.appendChild(center);
-        footerCenter.appendChild(button);
-        footer.appendChild(footerCenter);
-        card.appendChild(img);
-        card.appendChild(body);
-        card.appendChild(footer);
-        col.appendChild(card);
-    
-        // Lägg till det nya elementet i produktcontainern
-        container.appendChild(col);
-    }
-    
+            img.style.height = '150px'; // Ange höjden till 100% av container
+            img.style.objectFit = 'scale-down'; // Behåll bildens proportioner
+            col.style.maxWidth = '300px'; // Ange maxbredden till 200 pixlar
+            col.style.maxHeight = '100%'; // Ange maxhöjden till 300 pixlar
+            
+
+            cardBody.className = 'card-body p-4';
+            textCenter.className = 'text-center';
+            title.className = 'fw-bolder';
+            title.textContent = product.title;
+            reviews.className = 'd-flex justify-content-center small text-warning mb-2';
+
+            for (let i = 0; i < 5; i++) {
+                let star = document.createElement('div');
+                star.className = 'bi-star-fill';
+                reviews.appendChild(star);
+            }
+
+            price.textContent = '$' + product.price;
+            cardFooter.className = 'card-footer p-4 pt-0 border-top-0 bg-transparent';
+            buttonDiv.className = 'text-center';
+            button.className = 'btn btn-outline-dark mt-auto';
+            button.href = '#';
+            button.textContent = 'Add to cart';
+        
+            // Bygg upp HTML-strukturen
+            textCenter.appendChild(title);
+            textCenter.appendChild(reviews);
+            textCenter.appendChild(price);
+            cardBody.appendChild(textCenter);
+            buttonDiv.appendChild(button);
+            cardFooter.appendChild(buttonDiv);
+            card.appendChild(img);
+            card.appendChild(cardBody);
+            card.appendChild(cardFooter);
+            col.appendChild(card);
+            container.appendChild(col);
+        }
+
+        let selectedProductCategory = product.category;
+        let productsByCategory = JSON.parse(localStorage.getItem('relatedProducts'));
+
+        // Hämta produkterna i samma kategori som den valda produkten
+        // Filtera produkterna i samma kategori som den valda produkten, 
+        // Slumpar produkterna i samma kategori
+        // Väljer ut max 4 produkter
+        let relatedProducts = productsByCategory[selectedProductCategory]
+            .filter(products => products.id !== product.id)
+            .sort(() => Math.random()-0.5)
+            .slice(0, 4);
+
+        // Kontrollera om det finns några relaterade produkter
+        if (relatedProducts.length > 0) {
+            // Selektor för relaterade produkter
+            let relatedProductsContainer = document.querySelector('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center');
+            // Skapa upp varje relaterad produkt
+            relatedProducts.forEach(relatedProduct => {
+                createRelatedProductElement(relatedProduct, relatedProductsContainer);
+            });
+        } else {
+            console.log('Inga relaterade produkter hittades i samma kategori som den valda produkten.');
+        }   
+    };

@@ -38,7 +38,7 @@ fetchProducts(products => {
                     id: product.id,
                     title: product.title,
                     price: product.price,
-                    img: product.image,
+                    image: product.image,
                     category: product.category,
                     description: product.description,
                 };
@@ -60,13 +60,13 @@ fetchProducts(products => {
                     id: product.id,
                     title: product.title,
                     price: product.price,
-                    img: product.image,
+                    image: product.image,
                     description: product.description,
                 });
             });
 
             // Lagra objektet i localStorage
-            localStorage.setItem('productsByCategory', JSON.stringify(productsByCategory));
+            localStorage.setItem('relatedProducts', JSON.stringify(productsByCategory));
                 
             }});
 
