@@ -8,7 +8,9 @@ function fetchProducts(handleProducts) {
 }
 
 fetchProducts(products => {
-        let row = document.querySelector('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center');
+        // if product has correct category then
+    
+    let row = document.querySelector('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center');
 
         products.forEach(product => {
             // Skapa nya element
