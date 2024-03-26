@@ -2,18 +2,25 @@ const validateForm = formSelector => {
     const formElement = document.querySelector(formSelector);
 
     const validationOptions = [
-        
+
+        {//validate that is has some value
+            attribute: 'required',
+            isValid: input => input.value.trim() !== '',
+            errorMessage: (input, label) => `${label.textContent} is required`
+        },
         {//validate minlength off characters
             attribute: 'minlength',
             isValid: input => 
             input.value && input.value.length >= parseInt(input.minLength, 10),
             errorMessage: (input, label) => `${label.textContent} needs to be atleast ${input.minLength} characters `
         },
-        {//validate that is has some value
-            attribute: 'required',
-            isValid: input => input.value.trim() !== '',
-            errorMessage: (input, label) => `${label.textContent} is required`
+        {//validate maxlength off characters
+            attribute: 'custommaxlength',
+            isValid: input => 
+            input.value && input.value.length <= parseInt(input.getAttribute("custommaxlength"), 10),
+            errorMessage: (input, label) => `${label.textContent} cannot be more than ${input.getAttribute("custommaxlength")} characters `
         },
+        
         {//validate pattern of RegEx
             attribute: 'pattern',
             isValid: input => {
@@ -55,17 +62,24 @@ const validateForm = formSelector => {
     if (formElement) {
         formElement.setAttribute('novalidate', '');
 
-    Array.from(formElement.elements).forEach(element => {
-        element.addEventListener('blur', event =>{
-            validateSingleFormGroup(event.srcElement.parentElement.parentElement);
-            console.log("isRunning")
+    // Array.from(formElement.elements).forEach(element => {
+    //     element.addEventListener('blur', event =>{
+    //         validateSingleFormGroup(event.srcElement.parentElement.parentElement);
+            
 
 
-        })
+    //     })
 
 
 
-    })
+    // })
+
+    Array.from(formElement.querySelectorAll('input')).forEach(input => {
+        input.addEventListener('blur', event => {
+            validateSingleFormGroup(event.target.parentElement);
+        });
+    });
+
 
     formElement.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -80,7 +94,7 @@ const validateForm = formSelector => {
     };
 };
 }
-validateForm('#myForm');
+validateForm('#cartForm');
 
 
 // function saveFormData(){
