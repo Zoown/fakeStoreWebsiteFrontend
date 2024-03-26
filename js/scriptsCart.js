@@ -6,15 +6,22 @@ window.onload = function() {
     console.log(selectedProduct);
 
     // Skapa nya element för att visa produktinformation
-    let title = document.createElement('h2');
-    let price = document.createElement('p');
+    let linkA = document.createElement('a');
+    let title = document.createElement('p');
+    let price = document.createElement('span');
+
+    // title.setAttribute("class", "product-title");
+    price.setAttribute("class", "price");
+    linkA.setAttribute("href", "#");
+    //price.setAttribute("")
 
     // Ange textinnehållet för de nya elementen
-    title.textContent = selectedProduct.title;
-    price.textContent = 'Price: $' + selectedProduct.price;
+    linkA.textContent = "Product 1123123123123";
+    price.textContent = '$' + selectedProduct.price;
 
     // Lägg till de nya elementen i dokumentet
-    let row = document.querySelector('.container.px-4.px-lg-5.mt-5');
+    let row = document.querySelector('#start-list');
     row.appendChild(title);
-    row.appendChild(price);
+    title.appendChild(linkA);
+    title.appendChild(price);
 };
