@@ -120,4 +120,5 @@ fetchProducts(products => {
             // Lägg till det nya elementet i raden
             row.appendChild(col);
         });
-    })    .catch(error => console.error('Error:', error))    
+    })
+    //   .catch(error => console.error('Error:', error))    

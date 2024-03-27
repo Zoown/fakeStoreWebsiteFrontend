@@ -1,3 +1,5 @@
+let formHasError = true;
+
 const validateForm = formSelector => {
     const formElement = document.querySelector(formSelector);
 
@@ -27,7 +29,7 @@ const validateForm = formSelector => {
                 const patternRegex = new RegExp(input.pattern);
                 return patternRegex.test(input.value);
             },
-            errorMessage: (input, label) => `Not a valid ${label.textContent.toLowerCase()}`,
+            errorMessage: (input, label) => `Not a valid ${label.textContent.toLowerCase()}`
         },
         {//validate minlength off phone number
             attribute: 'minlengthPhone',
@@ -48,14 +50,18 @@ const validateForm = formSelector => {
         for (const option of validationOptions) {
             if (input.hasAttribute(option.attribute) && !option.isValid(input)) {
                 errorContainer.textContent = option.errorMessage(input, label);
-                input.classList.add(style="Color: red");
+                // input.classList.add(style="Color: red");
+                // input.style.color = "red";
                 formGroupError = true;
+                // formHasError = true;
             }
         }
 
         if(!formGroupError) {
             errorContainer.textContent =""; 
+            // formHasError = false
         }
+
 
     };
 
@@ -84,6 +90,14 @@ const validateForm = formSelector => {
     formElement.addEventListener('submit', (event) => {
         event.preventDefault();
         validateAllFormGroups(formElement);
+        
+        console.log("Form error = " + formHasError)
+        let selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+        console.log("ID: " + selectedProduct.id)
+    
+        if(!formHasError) {
+            // window.open('confirmorder.html', '_self');
+        }
     });
 
     const validateAllFormGroups = formToValidate => {
@@ -91,14 +105,26 @@ const validateForm = formSelector => {
         formGroups.forEach(formGroup => {
             validateSingleFormGroup(formGroup);
         });
+        formHasError = false;
+        console.log("Run validateForm");
     };
 };
+ //END OF VALIDATEFORM FUNCTION
 }
 validateForm('#cartForm');
-
+/*
 function sendtoConfirm(){
+    // validateForm('#cartForm')
+    console.log("Form error = " + formHasError)
+    let selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+    console.log("ID: " + selectedProduct.id)
     
+    if(!formHasError) {
+        // window.open('confirmorder.html', '_self');
+    }
+
 }
+*/
 
 
 // function saveFormData(){
