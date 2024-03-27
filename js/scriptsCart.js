@@ -2,10 +2,6 @@ window.onload = function() {
     // Hämta den valda produkten från localStorage
     let selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
 
-    // Nu kan du använda 'selectedProduct' på din form-sida
-    console.log(selectedProduct);
-
-    //<p>Total <span class="price" style="color:black"><b>$30</b></span></p>
     // Skapa nya element för att visa produktinformation
     let linkA = document.createElement('a');
     let productImage = document.createElement('img');
@@ -20,8 +16,7 @@ window.onload = function() {
     totalPrice.className = 'price';
     totalPrice.style.color = "black";
     totalPriceTitle.style.fontSize = "22px";
-    totalPriceTitle.style.marginBottom = "-5px";
-    totalPrice.style.marginBottom = "-10px";
+    totalPriceTitle.style.marginBottom = "-1px";
     totalPrice.style.fontSize = "16px";
     title.style.marginLeft = "20px";
     title.style.fontWeight = "bold";
@@ -34,9 +29,6 @@ window.onload = function() {
     productImage.style.objectFit = 'cover';
     productImage.style.float = 'left';
     productImage.style.marginRight = "10px";
-
-
-    //price.setAttribute("")
 
     // Ange textinnehållet för de nya elementen
     title.textContent = selectedProduct.title;

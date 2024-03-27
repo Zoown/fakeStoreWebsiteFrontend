@@ -96,6 +96,10 @@ const validateForm = formSelector => {
 }
 validateForm('#cartForm');
 
+function sendtoConfirm(){
+    
+}
+
 
 // function saveFormData(){
 //     let formData = {
