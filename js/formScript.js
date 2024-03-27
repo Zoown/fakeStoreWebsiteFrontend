@@ -53,7 +53,8 @@ const validateForm = formSelector => {
                 // input.classList.add(style="Color: red");
                 // input.style.color = "red";
                 formGroupError = true;
-                // formHasError = true;
+                formHasError = true;
+                console.log("formHasError set to true")
             }
         }
 
@@ -101,12 +102,13 @@ const validateForm = formSelector => {
     });
 
     const validateAllFormGroups = formToValidate => {
+        console.log("Run validateForm");
+        formHasError = false;
         const formGroups = Array.from(formToValidate.querySelectorAll('.formGroup'));
         formGroups.forEach(formGroup => {
+            // console.log("Validate form: " + formGroup.children[1].getAttribute())
             validateSingleFormGroup(formGroup);
         });
-        formHasError = false;
-        console.log("Run validateForm");
     };
 };
  //END OF VALIDATEFORM FUNCTION
