@@ -54,7 +54,7 @@ const validateForm = formSelector => {
                 // input.style.color = "red";
                 formGroupError = true;
                 formHasError = true;
-                console.log("formHasError set to true")
+                // console.log("formHasError set to true (Should happen everytime when has error, even when clicking submit)")
             }
         }
 
@@ -92,27 +92,31 @@ const validateForm = formSelector => {
         event.preventDefault();
         validateAllFormGroups(formElement);
         
-        console.log("Form error = " + formHasError)
+        // console.log("Form error = " + formHasError)
         let selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-        console.log("ID: " + selectedProduct.id)
+        // console.log("ID: " + selectedProduct.id)
     
         if(!formHasError) {
-            // window.open('confirmorder.html', '_self');
+            window.open('confirmorder.html', '_self');
         }
     });
 
     const validateAllFormGroups = formToValidate => {
-        console.log("Run validateForm");
-        formHasError = false;
-        const formGroups = Array.from(formToValidate.querySelectorAll('.formGroup'));
-        formGroups.forEach(formGroup => {
-            // console.log("Validate form: " + formGroup.children[1].getAttribute())
-            validateSingleFormGroup(formGroup);
+        // console.log("Run validateForm");
+        // const formGroups = Array.from(formToValidate.querySelectorAll('.formGroup'));
+        // formGroups.forEach(formGroup => {
+            // validateSingleFormGroup(formGroup);
+        // });
+
+        formHasError = false; // Reset to having no errors before we start re-validate on every field
+        Array.from(formToValidate.querySelectorAll('.formGroup')).forEach(field => {
+                validateSingleFormGroup(field);
         });
     };
 };
  //END OF VALIDATEFORM FUNCTION
 }
+
 validateForm('#cartForm');
 /*
 function sendtoConfirm(){
