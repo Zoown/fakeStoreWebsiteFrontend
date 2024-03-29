@@ -36,7 +36,8 @@ fetchProducts(products => {
                     event.preventDefault();
                 } else {
                 // Annars, följ länken till produktsidan
-                let sendToProducts = {
+
+                let selectedProduct = {
                     id: product.id,
                     title: product.title,
                     price: product.price,
@@ -44,6 +45,7 @@ fetchProducts(products => {
                     category: product.category,
                     description: product.description,
                 };
+
                 localStorage.setItem('sendToProducts', JSON.stringify(product));
                 window.open('products.html', '_self');
 
@@ -62,8 +64,6 @@ fetchProducts(products => {
                     id: product.id,
                     title: product.title,
                     price: product.price,
-                    image: product.image,
-                    description: product.description,
                 });
             });
 
@@ -94,15 +94,7 @@ fetchProducts(products => {
             button.addEventListener('click', function(event) {
                 event.stopPropagation();
                 event.preventDefault();
-        
-                let selectedProduct = {
-                    id: product.id,
-                    title: product.title,
-                    price: product.price,
-                };
-            
-                localStorage.setItem('selectedProduct', JSON.stringify(product));
-                window.open('cart.html', '_self');
+                addToCart(product);
             });
 
             // Bygg upp HTML-strukturen
@@ -121,4 +113,23 @@ fetchProducts(products => {
             row.appendChild(col);
         });
     })
-    //   .catch(error => console.error('Error:', error))    
+    //window.localStorage.clear();
+    let allProducts= JSON.parse(localStorage.allProductsJSON || '[]');
+    let row = document.querySelector('#productLength');
+    row.textContent = allProducts.length;
+    function addToCart(product){
+        let selectedProduct = {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            image: product.image,
+            description: product.description,
+        };
+        allProducts.push(selectedProduct);
+        console.log(allProducts);
+        localStorage.setItem('allProductsJSON', JSON.stringify(allProducts));
+
+        let row = document.querySelector('#productLength');
+        row.textContent = allProducts.length;
+
+    }
