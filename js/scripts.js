@@ -10,7 +10,7 @@ function fetchProducts(handleProducts) {
 fetchProducts(products => {
         // if product has correct category then
     
-    let row = document.querySelector('.row.gx-4.gx-lg-5.row-cols-2.row-cols-md-3.row-cols-xl-4.justify-content-center');
+    let row = document.querySelector('#products');
 
         products.forEach(product => {
             // Skapa nya element
@@ -64,6 +64,8 @@ fetchProducts(products => {
                     id: product.id,
                     title: product.title,
                     price: product.price,
+                    image: product.image,
+                    description: product.description,
                 });
             });
 
@@ -112,24 +114,60 @@ fetchProducts(products => {
             // Lägg till det nya elementet i raden
             row.appendChild(col);
         });
-    })
+    });
     //window.localStorage.clear();
-    let allProducts= JSON.parse(localStorage.allProductsJSON || '[]');
-    let row = document.querySelector('#productLength');
-    row.textContent = allProducts.length;
-    function addToCart(product){
-        let selectedProduct = {
+let allProducts= JSON.parse(localStorage.allProductsJSON || '[]');
+let row = document.querySelector('#productLength');
+row.textContent = allProducts.length;
+function addToCart(product){
+    let selectedProduct = {
             id: product.id,
             title: product.title,
             price: product.price,
             image: product.image,
             description: product.description,
         };
-        allProducts.push(selectedProduct);
-        console.log(allProducts);
-        localStorage.setItem('allProductsJSON', JSON.stringify(allProducts));
+    allProducts.push(selectedProduct);
+    console.log(allProducts);
+    localStorage.setItem('allProductsJSON', JSON.stringify(allProducts));
 
-        let row = document.querySelector('#productLength');
+    let row = document.querySelector('#productLength');
         row.textContent = allProducts.length;
 
     }
+
+    $(document).ready(function(){
+        $('body').on('mouseenter', '#cartDropdown', function(){
+            let dropdownData = document.querySelector('#dropdownData');
+            let allProducts = JSON.parse(localStorage.getItem('allProductsJSON'));
+    
+            // Rensa dropdownData innan du lägger till nya produkter
+            dropdownData.innerHTML = '';
+    
+            allProducts.forEach(function(product) {
+                let li = document.createElement('li');
+                let div = document.createElement('div');
+                let img = document.createElement('img');
+                let title = document.createElement('h4');
+                let price = document.createElement('p');
+    
+                div.className = 'dropdown-item';
+                img.src = product.image; // Använd produktbilden som källa
+                title.textContent = product.title.length > 30 ? product.title.substring(0, 27) + '...' : product.title;
+                price.textContent = "$" + product.price; // Använd produktbeskrivningen som textinnehåll
+                img.style.height = '30px';
+                img.style.width = '30px';
+                title.style.fontSize = '10px';
+                price.style.fontSize = '10px';
+    
+                div.appendChild(img);
+                div.appendChild(title);
+                div.appendChild(price);
+                li.appendChild(div);
+                dropdownData.appendChild(li);
+            });
+        });
+    });
+
+   
+    
