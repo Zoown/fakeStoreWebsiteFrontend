@@ -116,9 +116,9 @@ fetchProducts(products => {
         });
     });
     //window.localStorage.clear();
-let allProducts= JSON.parse(localStorage.allProductsJSON || '[]');
-let row = document.querySelector('#productLength');
-row.textContent = allProducts.length;
+    let allProducts= JSON.parse(localStorage.allProductsJSON || '[]');
+    let row = document.querySelector('#productLength');
+    row.textContent = allProducts.length;
 function addToCart(product){
     let selectedProduct = {
             id: product.id,
@@ -133,41 +133,7 @@ function addToCart(product){
 
     let row = document.querySelector('#productLength');
         row.textContent = allProducts.length;
-
+    
     }
 
-    $(document).ready(function(){
-        $('body').on('mouseenter', '#cartDropdown', function(){
-            let dropdownData = document.querySelector('#dropdownData');
-            let allProducts = JSON.parse(localStorage.getItem('allProductsJSON'));
-    
-            // Rensa dropdownData innan du lägger till nya produkter
-            dropdownData.innerHTML = '';
-    
-            allProducts.forEach(function(product) {
-                let li = document.createElement('li');
-                let div = document.createElement('div');
-                let img = document.createElement('img');
-                let title = document.createElement('h4');
-                let price = document.createElement('p');
-    
-                div.className = 'dropdown-item';
-                img.src = product.image; // Använd produktbilden som källa
-                title.textContent = product.title.length > 30 ? product.title.substring(0, 27) + '...' : product.title;
-                price.textContent = "$" + product.price; // Använd produktbeskrivningen som textinnehåll
-                img.style.height = '30px';
-                img.style.width = '30px';
-                title.style.fontSize = '10px';
-                price.style.fontSize = '10px';
-    
-                div.appendChild(img);
-                div.appendChild(title);
-                div.appendChild(price);
-                li.appendChild(div);
-                dropdownData.appendChild(li);
-            });
-        });
-    });
-
-   
     
