@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
     // Hämta den valda produkten från localStorage
     let selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
 
@@ -25,7 +25,7 @@ window.onload = function() {
     linkA.setAttribute("href", "#");
     productImage.setAttribute("src", selectedProduct.image,);
     productImage.style.height = '30px';
-    productImage.style.width = '30px'; // inline css
+    productImage.style.width = '30px';
     productImage.style.objectFit = 'cover';
     productImage.style.float = 'left';
     productImage.style.marginRight = "10px";
