@@ -81,9 +81,6 @@ const validateForm = formSelector => {
             event.preventDefault();
             validateAllFormGroups(formElement);
 
-            let selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-
-
             if (!formHasError) {
                 window.open('confirmorder.html', '_self');
             }
